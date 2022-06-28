@@ -123,6 +123,12 @@ jobs:
       - name: npm build
         run: npm run build
 
+      - name: swap test_projects to symlink
+        run: |
+          Move-Item -Path src/test/test_projects -Destination src/test/test_projects_real
+          New-Item -ItemType SymbolicLink -Path src/test/test_projects -Target src/test/test_projects_real
+        shell: pwsh
+
       - name: dart pub get (hello_world)
         if: startsWith(matrix.bot, 'dart')
         run: dart pub get
