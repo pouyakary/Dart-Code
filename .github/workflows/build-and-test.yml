@@ -134,6 +134,9 @@ jobs:
       - name: testing ls
         run: ls src/test
 
+      - name: testing ls
+        run: ls src/test/test_projects
+
       - name: dart pub get (hello_world)
         if: startsWith(matrix.bot, 'dart')
         run: dart pub get
