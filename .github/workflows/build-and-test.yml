@@ -128,7 +128,7 @@ jobs:
         shell: pwsh
 
       - name: symlink test_projects to test_projects_real
-        run: New-Item -ItemType SymbolicLink -Path src/test/test_projects -Target src/test/test_projects_real
+        run: New-Item -ItemType SymbolicLink -Path src/test/test_projects -Target $PWD/src/test/test_projects_real
         shell: pwsh
 
       - name: testing ls
