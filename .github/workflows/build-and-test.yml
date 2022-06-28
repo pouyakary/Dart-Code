@@ -132,10 +132,10 @@ jobs:
         shell: pwsh
 
       - name: testing ls
-        run: ls src/test
+        run: ls src/test/
 
       - name: testing ls
-        run: ls src/test/test_projects
+        run: ls src/test/test_projects/
 
       - name: dart pub get (hello_world)
         if: startsWith(matrix.bot, 'dart')
