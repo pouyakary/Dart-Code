@@ -55,7 +55,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 	/// If we restart too fast, things fail :-/
 	const delayBeforeRestart = () => delay(1000);
 
-	describe("resolves the correct debug config", () => {
+	describe.only("resolves the correct debug config", () => {
 		it("for a simple script", async () => {
 			const resolvedConfig = await getResolvedDebugConfiguration({
 				args: ["--foo"],
@@ -121,7 +121,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		});
 	});
 
-	it("runs and remains active until told to quit", async () => {
+	it.only("runs and remains active until told to quit", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.assertOutputContains("console", `Launching lib${path.sep}main.dart on ${deviceName} in debug mode...\n`),
@@ -146,7 +146,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		it("in the test script being run");
 	});
 
-	it("expected debugger services/extensions are available in debug mode", async () => {
+	it.only("expected debugger services/extensions are available in debug mode", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -169,7 +169,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		await waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.DebugBanner) === false, "Debug banner unloaded");
 	});
 
-	it("expected debugger services/extensions are available in noDebug mode", async () => {
+	it.only("expected debugger services/extensions are available in noDebug mode", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		config.noDebug = true;
 		await waitAllThrowIfTerminates(dc,
@@ -195,7 +195,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		await waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.DebugBanner) === false, "Debug banner unloaded");
 	});
 
-	it("expected debugger services/extensions are available after a hot restart", async () => {
+	it.only("expected debugger services/extensions are available after a hot restart", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -229,7 +229,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		await waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.DebugBanner) === false, "Debug banner unloaded");
 	});
 
-	it("can override platform", async () => {
+	it.only("can override platform", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -252,7 +252,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can toggle theme", async () => {
+	it.only("can toggle theme", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -274,7 +274,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("re-sends theme on hot restart if set by us", async () => {
+	it.only("re-sends theme on hot restart if set by us", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.BrightnessOverride), "Waiting for BrightnessOverride extension", 60000),
@@ -302,7 +302,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("does not re-send theme on hot restart if set by someone else", async () => {
+	it.only("does not re-send theme on hot restart if set by someone else", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.BrightnessOverride), "Waiting for BrightnessOverride extension", 60000),
@@ -336,7 +336,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can quit during a build", async () => {
+	it.only("can quit during a build", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		const configSequence = dc.configurationSequence();
 		// Kick off a build, but do not await it...
@@ -357,7 +357,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		]);
 	});
 
-	it("receives the expected output", async () => {
+	it.only("receives the expected output", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -373,7 +373,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("resolves relative paths", async () => {
+	it.only("resolves relative paths", async () => {
 		const config = await getLaunchConfiguration(
 			path.relative(fsPath(flutterHelloWorldFolder), fsPath(flutterHelloWorldMainFile)),
 			{ deviceId: flutterTestDeviceId },
@@ -381,7 +381,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		assert.equal(config!.program, fsPath(flutterHelloWorldMainFile));
 	});
 
-	it("can hot reload with customRequest", async () => {
+	it.only("can hot reload with customRequest", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			watchPromise("hot_reloads_successfully->configurationSequence", dc.configurationSequence()),
@@ -396,7 +396,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can hot reload using command", async () => {
+	it.only("can hot reload using command", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			watchPromise("hot_reloads_successfully->configurationSequence", dc.configurationSequence()),
@@ -411,7 +411,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("hot reloads on save", async () => {
+	it.only("hot reloads on save", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -432,7 +432,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("hot reloads on external modification of file", async () => {
+	it.only("hot reloads on external modification of file", async () => {
 		await setConfigForTest("dart", "previewHotReloadOnSaveWatcher", true);
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
@@ -454,7 +454,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can hot restart using customRequest", async () => {
+	it.only("can hot restart using customRequest", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -473,7 +473,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can hot restart using command", async () => {
+	it.only("can hot restart using command", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
@@ -492,7 +492,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("automatically spawns DevTools at startup", async function () {
+	it.only("automatically spawns DevTools at startup", async function () {
 		if (!extApi.flutterCapabilities.supportsDevToolsServerAddress)
 			this.skip();
 
@@ -500,7 +500,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		assert.ok((await extApi.debugCommands.devTools.devtoolsUrl).startsWith("http://"));
 	});
 
-	it("can launch DevTools externally", async () => {
+	it.only("can launch DevTools externally", async () => {
 		await setConfigForTest("dart", "devToolsLocation", "external");
 
 		const openBrowserCommand = sb.stub(extApi.envUtils, "openInBrowser").resolves();
@@ -527,7 +527,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can run using a custom tool", async () => {
+	it.only("can run using a custom tool", async () => {
 		const root = fsPath(flutterHelloWorldFolder);
 		const hasRunFile = prepareHasRunFile(root, "flutter");
 
@@ -549,7 +549,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		ensureHasRunWithArgsStarting(root, hasRunFile, "run --machine --start-paused");
 	});
 
-	it("can replace all args using custom tool", async () => {
+	it.only("can replace all args using custom tool", async () => {
 		const root = fsPath(flutterHelloWorldFolder);
 		const hasRunFile = prepareHasRunFile(root, "flutter");
 
@@ -574,7 +574,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 	});
 
 	const numReloads = 1;
-	it(`stops at a breakpoint after each reload (${numReloads})`, async function () {
+	it.only(`stops at a breakpoint after each reload (${numReloads})`, async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -634,7 +634,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("does not stop at a breakpoint in noDebug mode", async () => {
+	it.only("does not stop at a breakpoint in noDebug mode", async () => {
 		await openFile(flutterHelloWorldMainFile);
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		config.noDebug = true;
@@ -662,16 +662,16 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		assert.equal(didStop, false);
 	});
 
-	it("stops at a breakpoint in a part file");
+	it.only("stops at a breakpoint in a part file");
 
-	it("stops at a breakpoint in a deferred file");
+	it.only("stops at a breakpoint in a deferred file");
 
 	// Known not to work; https://github.com/Dart-Code/Dart-Code/issues/821
 	it.skip("stops at a breakpoint in the SDK");
 
-	it("stops at a breakpoint in an external package");
+	it.only("stops at a breakpoint in an external package");
 
-	it("steps into the SDK if debugSdkLibraries is true", async function () {
+	it.only("steps into the SDK if debugSdkLibraries is true", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -704,7 +704,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("does not step into the SDK if debugSdkLibraries is false", async function () {
+	it.only("does not step into the SDK if debugSdkLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -730,7 +730,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("steps into an external library if debugExternalPackageLibraries is true", async function () {
+	it.only("steps into an external library if debugExternalPackageLibraries is true", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -763,7 +763,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("does not step into an external library if debugExternalPackageLibraries is false", async function () {
+	it.only("does not step into an external library if debugExternalPackageLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -789,7 +789,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("steps into a local library even if debugExternalPackageLibraries is false", async function () {
+	it.only("steps into a local library even if debugExternalPackageLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -826,9 +826,9 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("downloads SDK source code from the VM");
+	it.only("downloads SDK source code from the VM");
 
-	it("correctly marks non-debuggable SDK frames when debugSdkLibraries is false", async function () {
+	it.only("correctly marks non-debuggable SDK frames when debugSdkLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -851,7 +851,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("correctly marks debuggable SDK frames when debugSdkLibraries is true", async function () {
+	it.only("correctly marks debuggable SDK frames when debugSdkLibraries is true", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -874,7 +874,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("correctly marks non-debuggable external library frames when debugExternalPackageLibraries is false", async function () {
+	it.only("correctly marks non-debuggable external library frames when debugExternalPackageLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -897,7 +897,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("correctly marks debuggable external library frames when debugExternalPackageLibraries is true", async function () {
+	it.only("correctly marks debuggable external library frames when debugExternalPackageLibraries is true", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -920,7 +920,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("correctly marks debuggable local library frames even when debugExternalPackageLibraries is false", async function () {
+	it.only("correctly marks debuggable local library frames even when debugExternalPackageLibraries is false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -947,7 +947,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("can fetch slices of stack frames", async () => {
+	it.only("can fetch slices of stack frames", async () => {
 		// TODO: This might be unreliable until dev channel gets this.
 		const expectFullCount = !versionIsAtLeast(extApi.dartCapabilities.version, "2.12.0-0");
 
@@ -1049,15 +1049,15 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		};
 	}
 
-	it("stops at a breakpoint with a condition returning true", testBreakpointCondition("1 == 1", true));
-	it("stops at a breakpoint with a condition returning 1", testBreakpointCondition("3 - 2", true));
-	it("does not stop at a breakpoint with a condition returning a string", testBreakpointCondition("'test'", false));
-	it("does not stop at a breakpoint with a condition returning false", testBreakpointCondition("1 == 0", false));
-	it("does not stop at a breakpoint with a condition returning 0", testBreakpointCondition("3 - 3", false));
-	it("does not stop at a breakpoint with a condition returning null", testBreakpointCondition("print('test');", false));
-	it("reports errors evaluating breakpoint conditions", testBreakpointCondition("1 + '1'", false, `Debugger failed to evaluate breakpoint condition "1 + '1'"`));
+	it.only("stops at a breakpoint with a condition returning true", testBreakpointCondition("1 == 1", true));
+	it.only("stops at a breakpoint with a condition returning 1", testBreakpointCondition("3 - 2", true));
+	it.only("does not stop at a breakpoint with a condition returning a string", testBreakpointCondition("'test'", false));
+	it.only("does not stop at a breakpoint with a condition returning false", testBreakpointCondition("1 == 0", false));
+	it.only("does not stop at a breakpoint with a condition returning 0", testBreakpointCondition("3 - 3", false));
+	it.only("does not stop at a breakpoint with a condition returning null", testBreakpointCondition("print('test');", false));
+	it.only("reports errors evaluating breakpoint conditions", testBreakpointCondition("1 + '1'", false, `Debugger failed to evaluate breakpoint condition "1 + '1'"`));
 
-	it("logs expected text (and does not stop) at a logpoint", async () => {
+	it.only("logs expected text (and does not stop) at a logpoint", async () => {
 		await openFile(flutterHelloWorldMainFile);
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 
@@ -1092,7 +1092,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		assert.equal(didStop, false);
 	});
 
-	it("provides local variables when stopped at a breakpoint", async () => {
+	it.only("provides local variables when stopped at a breakpoint", async () => {
 		await openFile(flutterHelloWorldMainFile);
 		const debugConfig = await startDebugger(dc, flutterHelloWorldMainFile);
 		await dc.hitBreakpoint(debugConfig, {
@@ -1178,7 +1178,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("excludes type args from local variables when stopped at a breakpoint in a generic method", async () => {
+	it.only("excludes type args from local variables when stopped at a breakpoint in a generic method", async () => {
 		await openFile(flutterHelloWorldMainFile);
 		const debugConfig = await startDebugger(dc, flutterHelloWorldMainFile);
 		await dc.hitBreakpoint(debugConfig, {
@@ -1197,7 +1197,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("includes fields and getters in variables when stopped at a breakpoint", async function () {
+	it.only("includes fields and getters in variables when stopped at a breakpoint", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -1229,7 +1229,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("includes fields but not getters in variables when evaluateGettersInDebugViews=false", async function () {
+	it.only("includes fields but not getters in variables when evaluateGettersInDebugViews=false", async function () {
 		if (flutterTestDeviceIsWeb)
 			return this.skip();
 
@@ -1288,7 +1288,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		);
 	});
 
-	it("evaluateName evaluates to the expected value", async () => {
+	it/* .only */("evaluateName evaluates to the expected value", async () => {
 		await openFile(flutterHelloWorldMainFile);
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await dc.hitBreakpoint(config, {
@@ -1327,7 +1327,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 	});
 
 	describe("can evaluate at breakpoint", () => {
-		it("simple expressions", async () => {
+		it/* .only */("simple expressions", async () => {
 			await openFile(flutterHelloWorldMainFile);
 			const config = await startDebugger(dc, flutterHelloWorldMainFile);
 			await waitAllThrowIfTerminates(dc,
