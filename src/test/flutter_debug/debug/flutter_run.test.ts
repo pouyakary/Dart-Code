@@ -169,7 +169,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		await waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.DebugBanner) === false, "Debug banner unloaded");
 	});
 
-	it.only("expected debugger services/extensions are available in noDebug mode", async () => {
+	it("expected debugger services/extensions are available in noDebug mode", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		config.noDebug = true;
 		await waitAllThrowIfTerminates(dc,
@@ -195,7 +195,7 @@ describe(`flutter run debugger (launch on ${flutterTestDeviceId})`, () => {
 		await waitForResult(() => extApi.debugCommands.vmServices.serviceExtensionIsLoaded(VmServiceExtension.DebugBanner) === false, "Debug banner unloaded");
 	});
 
-	it.only("expected debugger services/extensions are available after a hot restart", async () => {
+	it("expected debugger services/extensions are available after a hot restart", async () => {
 		const config = await startDebugger(dc, flutterHelloWorldMainFile);
 		await waitAllThrowIfTerminates(dc,
 			dc.configurationSequence(),
